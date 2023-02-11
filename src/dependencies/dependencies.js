@@ -6,14 +6,14 @@ const YAML = require("yaml");
 class DependenciesLogic {
     constructor() {
         this.getYaml = () => {
-            const filePath = process.env.pubspectPath;
+            const filePath = process.env.projectRootPath + "/pubspec.yaml";
             return YAML.parse(fs.readFileSync(filePath, "utf8"));
         };
-        this.get = () => {
+        this.getDependencies = () => {
             return Object.keys(this.getYaml().dependencies);
         };
         this.analyzeResult = (countImportDependencies) => {
-            const dependenciesUnused = this.get().filter((dependency) => {
+            const dependenciesUnused = this.getDependencies().filter((dependency) => {
                 if (countImportDependencies[dependency] == 0) {
                     return true;
                 }

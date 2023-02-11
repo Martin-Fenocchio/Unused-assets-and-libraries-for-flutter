@@ -11,12 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const dependencies_1 = require("./src/dependencies/dependencies");
 const finder_1 = require("./src/finder/finder");
-const fs = require("fs");
-const YAML = require("yaml");
 require("dotenv").config();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const finderLogic = new finder_1.FinderLogic();
     const countImportDependencies = yield finderLogic.findDependencies();
     new dependencies_1.DependenciesLogic().analyzeResult(countImportDependencies);
+    finderLogic.findAssets();
 });
 main();

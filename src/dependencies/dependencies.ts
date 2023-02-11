@@ -3,20 +3,22 @@ const YAML = require("yaml");
 
 export class DependenciesLogic {
   getYaml = () => {
-    const filePath = process.env.pubspectPath;
+    const filePath = process.env.projectRootPath + "/pubspec.yaml";
     return YAML.parse(fs.readFileSync(filePath, "utf8"));
   };
 
-  get = (): string[] => {
+  getDependencies = (): string[] => {
     return Object.keys(this.getYaml().dependencies);
   };
 
   analyzeResult = (countImportDependencies: any) => {
-    const dependenciesUnused: string[] = this.get().filter((dependency) => {
-      if (countImportDependencies[dependency] == 0) {
-        return true;
+    const dependenciesUnused: string[] = this.getDependencies().filter(
+      (dependency) => {
+        if (countImportDependencies[dependency] == 0) {
+          return true;
+        }
       }
-    });
+    );
 
     console.log(
       `The project ${this.getYaml().name} have ${
